@@ -20,14 +20,20 @@ message Item {
 
 service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns(Order);
+  rpc GetOrder(GetOrderRequest) returns (Order);
 }
 
-message ItemsWithQuantity {
-  string ID = 1;
-  int32 quantity = 2;
+message GetOrderRequest {
+  string OrderID = 1;
+  string CustomerID = 2;
 }
 
 message CreateOrderRequest {
   string customerID = 1;
   repeated ItemsWithQuantity Items = 2;
+}
+
+message ItemsWithQuantity {
+  string ID = 1;
+  int32 quantity = 2;
 }

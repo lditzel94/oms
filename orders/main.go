@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/lditzel94/oms/commons"
 	"github.com/lditzel94/oms/commons/discovery"
 	"github.com/lditzel94/oms/commons/discovery/consul"
