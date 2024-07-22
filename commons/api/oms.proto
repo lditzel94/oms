@@ -14,7 +14,7 @@ message Order {
 message Item {
   string ID = 1;
   string Name = 2;
-  string Quantity = 3;
+  int32 Quantity = 3;
   string PriceID = 4;
 }
 
