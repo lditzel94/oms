@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	pb "github.com/lditzel94/oms/commons/api"
 	"github.com/lditzel94/oms/commons/broker"
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -48,9 +47,6 @@ func (c *consumer) Listen(ch *amqp.Channel) {
 
 	go func() {
 		for d := range msgs {
-			// Extract the headers
-			ctx := broker.ExtractAMQPHeader(context.Background(), d.Headers)
-
 			o := &pb.Order{}
 			if err := json.Unmarshal(d.Body, o); err != nil {
 				d.Nack(false, false)
@@ -70,9 +66,6 @@ func (c *consumer) Listen(ch *amqp.Channel) {
 
 				continue
 			}
-
-			messageSpan.AddEvent(fmt.Sprintf("payment.created: %s", paymentLink))
-			messageSpan.End()
 
 			log.Printf("Payment link created %s", paymentLink)
 			d.Ack(false)

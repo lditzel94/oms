@@ -6,10 +6,12 @@ import (
 )
 
 type OrdersService interface {
-	CreateOrder(ctx context.Context, request *pb.CreateOrderRequest) (*pb.Order, error)
-	ValidateOrder(ctx context.Context, request *pb.CreateOrderRequest) ([]*pb.Item, error)
+	CreateOrder(context.Context, *pb.CreateOrderRequest, []*pb.Item) (*pb.Order, error)
+	ValidateOrder(context.Context, *pb.CreateOrderRequest) ([]*pb.Item, error)
+	GetOrder(context.Context, *pb.GetOrderRequest) (*pb.Order, error)
 }
 
 type OrdersStore interface {
-	Create(ctx context.Context) error
+	Create(context.Context, *pb.CreateOrderRequest, []*pb.Item) (string, error)
+	Get(ctx context.Context, id, customerID string) (*pb.Order, error)
 }

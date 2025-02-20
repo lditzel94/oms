@@ -64,8 +64,6 @@ func main() {
 	service := NewService(store)
 	NewGRPCHandler(grpcServer, service, ch)
 
-	service.CreateOrder(context.Background())
-
 	log.Println("GRPC server listening on", grpcAddr)
 
 	if err := grpcServer.Serve(l); err != nil {

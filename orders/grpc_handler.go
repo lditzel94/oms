@@ -27,7 +27,12 @@ func NewGRPCHandler(grpcServer *grpc.Server, service OrdersService, channel *amq
 func (h *grpcHandler) CreateOrder(ctx context.Context, p *pb.CreateOrderRequest) (*pb.Order, error) {
 	log.Printf("New order created, Order %v", p)
 
-	order, err := h.service.CreateOrder(ctx, p)
+	items, err := h.service.ValidateOrder(ctx, p)
+	if err != nil {
+		return nil, err
+	}
+
+	order, err := h.service.CreateOrder(ctx, p, items)
 	if err != nil {
 		return nil, err
 	}
